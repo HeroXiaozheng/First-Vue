@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+	<title>firstVue</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="app">
+		<h1>{{ name }}</h1>
+		<h1>{{ age }}</h1>
+		<p>{{ intro() }}</p>
+		<hr>
+		<p class="title">属性绑定以及标签绑定</p>
+		<a v-bind:href="website">百度官网</a>
+		<p v-html="websiteTag"></p>
+		<hr>
+		<p class="title">事件绑定</p>
+		<button v-on:click="add(1)">加一岁</button>
+		<button v-on:click="minus(1)">减一岁</button>
+		<button @click="add(10)">加十岁</button>
+		<button @click="minus(10)">减十岁</button>
+		<p>今年{{age}}岁</p>
+		<div id="canvas" @mousemove="updateXY">
+			X:{{x}},Y:{{y}} -
+			<span v-on:mousemove.stop="">Stop Moving</span>
+		</div>
+		<hr>
+		<p class="title">事件修饰符</p>
+		<a v-on:click.prevent="alert()" href="http://www.baidu.com">百度一下</a><br>
+		<button @click.once="alert()">只执行一次事件</button>
+
+		<hr>
+		<p><b>.capture</b>修饰符的作用--<font color="red">将事件处理模式改为捕获模式，先执行</font></p>
+		<p>当点击obj3时，正常应该为3,2,1 但1加入了capture,所以顺序为1,3,2</p>
+		<div class="obj1" v-on:click.capture="testCapture(1)">
+			<div class="obj2" v-on:click="testCapture(2)">
+				<div class="obj3" v-on:click="testCapture(3)">3</div>
+			</div>
+		</div>
+		<hr>
+		<p><b>.self</b>修饰符的作用--<font color="red">只有事件是作用于当前元素时才会执行，忽略冒泡或捕获</font></p>
+		<p>当点击obj3时，正常应该为3,2,1 但2加入了self，点击事件作用在3而不是2，所以2的点击事件不会被触发，但依然会冒泡或者捕获</p>
+		<div class="obj1" v-on:click.capture="testCapture(1)">
+			<div class="obj2" v-on:click.self="testCapture(2)">
+				<div class="obj3" v-on:click="testCapture(3)">3</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="app.js"></script>
+</body>
+</html>
